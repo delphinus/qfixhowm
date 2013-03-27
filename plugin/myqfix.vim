@@ -520,6 +520,9 @@ function! s:QFixBufLeave(...)
     return
   endif
   if &buftype == 'quickfix'
+    if !exists('b:qfixwin_buftype')
+      let b:qfixwin_buftype = 0
+    endif
     exe 'let g:QFix_SelectedLine'.b:qfixwin_buftype.'='.line('.')
     let b:qfixwin_height = winheight(0)
     let b:qfixwin_width  = winwidth(0)
@@ -1396,6 +1399,9 @@ function! QFixPreview()
   endif
   if file == ''
     let saved_ul = g:QFix_UseLocationList
+    if !exists('b:qfixwin_buftype')
+      let b:qfixwin_buftype = 0
+    endif
     let g:QFix_UseLocationList = b:qfixwin_buftype
     let qf = QFixGetqflist()
     let g:QFix_UseLocationList = saved_ul
